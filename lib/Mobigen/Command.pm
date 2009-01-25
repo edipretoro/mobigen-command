@@ -3,6 +3,16 @@ package Mobigen::Command;
 use warnings;
 use strict;
 
+use base qw( Class::Accessor::Fast Class::ErrorHandler );
+__PACKAGE__->mk_accessors( qw( mobigen stdout stderr options input_file output_file ) );
+
+use IPC::Run qw( start );
+use Carp qw( carp );
+
+our %option = (
+    
+);
+
 =head1 NAME
 
 Mobigen::Command - The great new Mobigen::Command!
@@ -34,11 +44,19 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =head1 FUNCTIONS
 
-=head2 function1
+=head2 new
 
 =cut
 
-sub function1 {
+sub new {
+    my $class = shift;
+    my $self = {
+        mobigen => shift || 'mobigen_linux',
+        options => [],
+        input_file => '',
+        output_file => '',
+    };
+    bless $self, $class;
 }
 
 =head2 function2
