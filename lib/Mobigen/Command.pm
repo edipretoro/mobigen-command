@@ -76,6 +76,22 @@ sub compression {
     }
 }
 
+=head2 verbosity
+
+=cut
+
+sub verbosity {
+    my ($self, $verbosity) = @_;
+    
+    if ($verbosity eq 'normal') {
+        push @{$self->options}, '-v1';
+    } elsif ($verbosity eq 'quiet') {
+        push @{$self->options}, '-v0';
+    } elsif ($verbosity eq 'high') {
+        push @{$self->options}, '-v';
+    }
+}
+
 =head1 AUTHOR
 
 Emmanuel Di Pretoro, C<< <edipretoro at gmail.com> >>
