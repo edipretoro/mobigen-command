@@ -17,6 +17,8 @@ __PACKAGE__->mk_accessors(
   ) 
 );
 
+use File::Basename;
+use File::Spec;
 use IPC::Run qw( start );
 use Carp qw( carp );
 
@@ -152,9 +154,21 @@ sub execute {
             return;
         };
     }
+    
+    $self->_rename_output_file() if $self->output_file;
 
     return 1;
 }
+
+sub _rename_output_file {
+    my $self = shift;
+    
+    my ($file, $path, $ext) = fileparse( $self->input_file, qr/\.[^.]*/);
+    my $mobi_file = File::Spec->catfile( $path, $file . '.mobi' );
+
+    move($mobi_file, $self->output_file);
+}
+
 =head1 AUTHOR
 
 Emmanuel Di Pretoro, C<< <edipretoro at gmail.com> >>
