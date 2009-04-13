@@ -94,6 +94,22 @@ sub verbosity {
     }
 }
 
+=head2 security
+
+=cut 
+
+sub security {
+    my ($self, $level) = @_;
+    
+    if ($level eq 'unsecure') {
+        $self->{current_options}->{security} = '-s0';
+    } elsif ($level eq 'encrypted') {
+        $self->{current_options}->{security} = '-s1';
+    } elsif ($level eq 'pid_secure') {
+        $self->{current_options}->{security} = '-s2';
+    }
+}
+
 =head1 AUTHOR
 
 Emmanuel Di Pretoro, C<< <edipretoro at gmail.com> >>
