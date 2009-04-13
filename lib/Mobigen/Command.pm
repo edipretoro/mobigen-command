@@ -15,7 +15,7 @@ our %option = (
 
 =head1 NAME
 
-Mobigen::Command - The great new Mobigen::Command!
+Mobigen::Command - A wrapper class for mobigen command line utility
 
 =head1 VERSION
 
@@ -28,19 +28,10 @@ our $VERSION = '0.01';
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
     use Mobigen::Command;
 
     my $foo = Mobigen::Command->new();
     ...
-
-=head1 EXPORT
-
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
 
 =head1 FUNCTIONS
 
