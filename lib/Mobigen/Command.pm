@@ -10,7 +10,6 @@ use IPC::Run qw( start );
 use Carp qw( carp );
 
 our %option = (
-    compression => '',
     verbose => '',
     security => '',
 #    vouchers => '', # don't know what it mean...
@@ -61,11 +60,20 @@ sub new {
     bless $self, $class;
 }
 
-=head2 function2
+=head2 compression
 
 =cut
 
-sub function2 {
+sub compression {
+    my ($self, $compression) = @_;
+    
+    if ($conpression == 0) {
+        push @{$self->options}, '-c0';
+    } elsif ($compression == 1) {
+        push @{$self->options}, '-c1';        
+    } elsif ($compression == 2) {
+        push @{$self->options}, '-c2';
+    }
 }
 
 =head1 AUTHOR
