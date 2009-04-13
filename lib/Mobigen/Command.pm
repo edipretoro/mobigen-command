@@ -10,7 +10,16 @@ use IPC::Run qw( start );
 use Carp qw( carp );
 
 our %option = (
-    
+    compression => '',
+    verbose => '',
+    security => '',
+#    vouchers => '', # don't know what it mean...
+    nocopypaste => '-nocopypaste',
+    rebuild => '-rebuild',
+    onlydeps => '-onlydeps',
+    unicode => '-unicode',
+    lowpriority => '-lowpriority',
+    gif => '-gif',
 );
 
 =head1 NAME
@@ -30,8 +39,10 @@ our $VERSION = '0.01';
 
     use Mobigen::Command;
 
-    my $foo = Mobigen::Command->new();
-    ...
+    my $mobi = Mobigen::Command->new( '/usr/bin/mobigen_linux' );
+    $mobi->input_file( './article.html' );
+    $mobi->output_file( './article.mobi' );
+    $mobi->execute();
 
 =head1 FUNCTIONS
 
