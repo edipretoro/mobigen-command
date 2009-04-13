@@ -15,6 +15,7 @@ our %option = (
 #    vouchers => '', # don't know what it mean...
     nocopypaste => '-nocopypaste',
     rebuild => '-rebuild',
+    nodeps => '-nodeps',
     onlydeps => '-onlydeps',
     unicode => '-unicode',
     lowpriority => '-lowpriority',
@@ -54,6 +55,7 @@ sub new {
     my $self = {
         mobigen => shift || 'mobigen_linux',
         options => [],
+        current_options => {},
         input_file => '',
         output_file => '',
     };
@@ -68,11 +70,11 @@ sub compression {
     my ($self, $compression) = @_;
     
     if ($conpression == 0) {
-        push @{$self->options}, '-c0';
+        $self->{current_options}->{compresion} = '-c0';
     } elsif ($compression == 1) {
-        push @{$self->options}, '-c1';        
+        $self->{current_options}->{compresion} = '-c1';
     } elsif ($compression == 2) {
-        push @{$self->options}, '-c2';
+        $self->{current_options}->{compresion} = '-c2';
     }
 }
 
@@ -84,11 +86,11 @@ sub verbosity {
     my ($self, $verbosity) = @_;
     
     if ($verbosity eq 'normal') {
-        push @{$self->options}, '-v1';
+        $self->{current_options}->{verbosity} = '-v1';
     } elsif ($verbosity eq 'quiet') {
-        push @{$self->options}, '-v0';
+        $self->{current_options}->{verbosity} = '-v0';
     } elsif ($verbosity eq 'high') {
-        push @{$self->options}, '-v';
+        $self->{current_options}->{verbosity} = '-v';
     }
 }
 
