@@ -69,7 +69,7 @@ sub new {
 sub compression {
     my ($self, $compression) = @_;
     
-    if ($conpression == 0) {
+    if ($compression == 0) {
         $self->{current_options}->{compresion} = '-c0';
     } elsif ($compression == 1) {
         $self->{current_options}->{compresion} = '-c1';
