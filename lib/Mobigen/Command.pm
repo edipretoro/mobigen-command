@@ -19,6 +19,7 @@ __PACKAGE__->mk_accessors(
 
 use File::Basename;
 use File::Spec;
+use File::Copy;
 use IPC::Run qw( start );
 use Carp qw( carp );
 
@@ -149,12 +150,13 @@ sub execute {
         return;
     }
     else {
-        finish $h or do {
+        finish $h or do { # it's quite rare mobigen return something else that a true value
             $self->error($self->stderr);
+            $self->_rename_output_file() if $self->output_file;
             return;
         };
-    }
-    
+    }    
+
     $self->_rename_output_file() if $self->output_file;
 
     return 1;
