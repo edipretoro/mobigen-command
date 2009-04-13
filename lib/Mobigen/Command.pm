@@ -4,14 +4,23 @@ use warnings;
 use strict;
 
 use base qw( Class::Accessor::Fast Class::ErrorHandler );
-__PACKAGE__->mk_accessors( qw( mobigen stdout stderr options input_file output_file ) );
+__PACKAGE__->mk_accessors( 
+    qw( 
+          mobigen
+          stdout
+          stderr
+          options
+          input_file
+          output_file
+          timeout
+          command
+  ) 
+);
 
 use IPC::Run qw( start );
 use Carp qw( carp );
 
 our %option = (
-    verbose => '',
-    security => '',
 #    vouchers => '', # don't know what it mean...
     nocopypaste => '-nocopypaste',
     rebuild => '-rebuild',
@@ -110,6 +119,42 @@ sub security {
     }
 }
 
+=head2 execute
+
+=cut
+
+sub execute {
+    my $self = shift;
+    
+    my @opts = ( \$self->{stdin}, \$self->{stdout}, \$self->{stderr} );
+    push @opts, IPC::Run::timeout($self->timeout) if $self->timeout;
+
+    my $cmd = [
+        $self->mobigen,
+        values(%{$self->{current_options}}),
+#        @{ $self->options },
+        $self->input_file,
+    ];
+
+    $self->command( join( ' ', @$cmd ) );
+
+    my $h = eval {
+        start( $cmd, @opts )
+    };
+
+    if( $@ ){
+        $self->error($@);
+        return;
+    }
+    else {
+        finish $h or do {
+            $self->error($self->stderr);
+            return;
+        };
+    }
+
+    return 1;
+}
 =head1 AUTHOR
 
 Emmanuel Di Pretoro, C<< <edipretoro at gmail.com> >>
